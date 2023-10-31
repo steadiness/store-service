@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container" style="max-width: 600px">
+    <div class="py-5 text-center">
+        <h2>메일 목록</h2>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-primary float-end"
+                    onclick="location.href='addForm.html'" type="button">새메일 작성</button>
+        </div>
+    </div>
+
+    <hr class="my-4">
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>보낸이</th>
+                <th>받는이</th>
+                <th>내용</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="email : ${emails}">
+                <td><a href="email.html" th:href="@{/emails/{emailId}(emailId=${email.id})}" th:text="${email.id}">메일ID</a></td>
+                <td th:text="${email.fromEmail}">AAA@gamil.com</td>
+                <td th:text="${email.toEmail}">BBB@naver.com</td>
+                <td th:text="${email.content}">test content 1</td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</div> <!-- /container -->
+
+</body>
+</html>

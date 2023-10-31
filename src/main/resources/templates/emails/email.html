@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <link th:href="@{/css/bootstrap.min.css}"
+        href="../css/bootstrap.min.css" rel="stylesheet">
+  <style>
+        .container {
+            max-width: 560px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="py-5 text-center">
+    <h2 th:text="#{page.email}">메일 상세</h2>
+  </div>
+
+  <!-- 추가 -->
+  <h2 th:if="${param.status}" th:text="'저장 완료'"></h2>
+
+  <div>
+    <label for="emailId" th:text="#{label.email.id}">이메일 ID</label>
+    <input type="text" id="emailId" name="emailId" class="form-control" value="1" th:value="${email.id}" readonly>
+  </div>
+  <div>
+    <label for="fromEmail" th:text="#{label.email.fromEmail}">보낸이</label>
+    <input type="text" id="fromEmail" name="fromEmail" class="form-control" value="보낸이A" th:value="${email.fromEmail}" readonly>
+  </div>
+  <div>
+    <label for="toEmail" th:text="#{label.email.toEmail}">받는이</label>
+    <input type="text" id="toEmail" name="toEmail" class="form-control" value="받는이A" th:value="${email.toEmail}" readonly>
+  </div>
+  <div>
+    <label for="content" th:text="#{label.email.content}">내용</label>
+    <input type="text" id="content" name="content" class="form-control" value="내용" th:value="${item.content}" readonly>
+  </div>
+
+  <hr class="my-4">
+
+  <div class="row">
+    <div class="col">
+      <button class="w-100 btn btn-secondary btn-lg"
+              onclick="location.href='emails.html'"
+              th:onclick="|location.href='@{/emails}'|"
+              type="button" th:text="#{button.cancel}">목록으로</button>
+    </div>
+  </div>
+
+</div> <!-- /container -->
+</body>
+</html>
