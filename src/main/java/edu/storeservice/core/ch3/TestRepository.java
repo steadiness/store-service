@@ -9,10 +9,11 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.NoSuchElementException;
 
+import static edu.storeservice.core.ch3.ConnectionConst.*;
 
 @Slf4j
 @RequiredArgsConstructor
-public class AccountProgrammingRepository {
+public class TestRepository {
 
     private final DataSource dataSource;
 
@@ -116,5 +117,4 @@ public class AccountProgrammingRepository {
         log.info("get connection={} class={}", connection, connection.getClass());
         return connection;
     }
-
 }

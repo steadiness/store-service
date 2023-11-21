@@ -11,11 +11,8 @@ import org.springframework.util.StopWatch;
 @Aspect
 public class ExampleAspect {
 
-    @Around("execution(* edu.storeservice.core.ch2..*(..))")
+    //@Around("execution(* edu.storeservice.core.ch2..*(..))")
     public Object AopTimer(ProceedingJoinPoint joinPoint) throws Throwable {
-
-        //long beforeTime = System.currentTimeMillis();
-        //log.info("##### {} 실행 ######", joinPoint.getSignature());
 
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
@@ -26,9 +23,6 @@ public class ExampleAspect {
         stopWatch.stop();
         log.info("##### {} 성능 측정 ######", joinPoint.getSignature());
         log.info(stopWatch.prettyPrint());
-
-        //long afterTime = System.currentTimeMillis();
-        //log.info("@@@@@ 수행시간: {} ms", afterTime - beforeTime);
 
         return result;
 

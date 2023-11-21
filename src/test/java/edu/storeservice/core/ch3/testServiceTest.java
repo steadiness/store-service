@@ -16,26 +16,26 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @Slf4j
-class AccountProgrammingServiceTest {
+class testServiceTest {
 
     public static final String NAME_BALLY = "BELLY";
     public static final String NAME_LOTTY = "LOTTY";
     public static final String NAME_EXCEPTION = "EXCEPTION";
 
-    private AccountProgrammingService accountProgrammingService;
-    private AccountProgrammingRepository accountProgrammingRepository;
+    private TestService testService;
+    private TestRepository testRepository;
 
     @BeforeEach
     void before() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource(URL, USERNAME, PASSWORD);
-        PlatformTransactionManager transactionManager = new DataSourceTransactionManager(dataSource);
-        accountProgrammingRepository = new AccountProgrammingRepository(dataSource);
-        accountProgrammingService = new AccountProgrammingService(transactionManager, accountProgrammingRepository);
+        //PlatformTransactionManager transactionManager = new DataSourceTransactionManager(dataSource);
+        testRepository = new TestRepository(dataSource);
+        testService = new TestService(testRepository);
     }
 
     @AfterEach
     void after() throws SQLException {
-        accountProgrammingRepository.delete();
+        testRepository.delete();
     }
 
     @Test
@@ -44,37 +44,37 @@ class AccountProgrammingServiceTest {
 
         Account fromAccount = new Account(NAME_BALLY, 10000);
         Account toAccount = new Account(NAME_LOTTY, 10000);
-        accountProgrammingRepository.save(fromAccount);
-        accountProgrammingRepository.save(toAccount);
+        testRepository.save(fromAccount);
+        testRepository.save(toAccount);
 
-        accountProgrammingService.transfer(fromAccount.getName(), toAccount.getName(), 2000);
+        testService.transfer(fromAccount.getName(), toAccount.getName(), 2000);
 
-        Account findAccount1 = accountProgrammingRepository.findByName(fromAccount.getName());
-        Account findAccount2 = accountProgrammingRepository.findByName(toAccount.getName());
+        Account findAccount1 = testRepository.findByName(fromAccount.getName());
+        Account findAccount2 = testRepository.findByName(toAccount.getName());
 
         assertThat(findAccount1.getBalance()).isEqualTo(8000);
         assertThat(findAccount2.getBalance()).isEqualTo(12000);
     }
 
     @Test
-    @DisplayName("이체중 예외 발생")
+    @DisplayName("이체 중 예외 발생")
     void accountTransferEx() throws SQLException {
 
         Account fromAccount = new Account(NAME_BALLY, 10000);
         Account toAccount = new Account(NAME_EXCEPTION, 10000);
-        accountProgrammingRepository.save(fromAccount);
-        accountProgrammingRepository.save(toAccount);
+        testRepository.save(fromAccount);
+        testRepository.save(toAccount);
 
-        //log.info("\n\n##### 이체 중 예외 발생 START #####");
+        log.info("##### 이체 중 예외 발생 START #####");
 
         assertThatThrownBy(() ->
-                accountProgrammingService.transfer(fromAccount.getName(), toAccount.getName(), 2000))
+                testService.transfer(fromAccount.getName(), toAccount.getName(), 2000))
                 .isInstanceOf(IllegalStateException.class);
 
-        //log.info("\n##### 이체 중 예외 발생 STOP #####\n");
+        log.info("##### 이체 중 예외 발생 STOP #####");
 
-        Account findAccount1 = accountProgrammingRepository.findByName(fromAccount.getName());
-        Account findAccount2 = accountProgrammingRepository.findByName(toAccount.getName());
+        Account findAccount1 = testRepository.findByName(fromAccount.getName());
+        Account findAccount2 = testRepository.findByName(toAccount.getName());
 
         assertThat(findAccount1.getBalance()).isEqualTo(10000);
         assertThat(findAccount2.getBalance()).isEqualTo(10000);
