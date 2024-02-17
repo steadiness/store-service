@@ -17,6 +17,6 @@ public class AppConfig {
 
     @Bean
     public EmailService emailService() {
-        return new GmailSMTPService(emailRepository());
+        return new OutlookSMTPService(emailRepository());
     }
 }

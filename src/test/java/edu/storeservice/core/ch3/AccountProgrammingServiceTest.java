@@ -65,13 +65,13 @@ class AccountProgrammingServiceTest {
         accountProgrammingRepository.save(fromAccount);
         accountProgrammingRepository.save(toAccount);
 
-        //log.info("\n\n##### 이체 중 예외 발생 START #####");
+        log.info("\n\n##### 이체 중 예외 발생 START #####");
 
         assertThatThrownBy(() ->
                 accountProgrammingService.transfer(fromAccount.getName(), toAccount.getName(), 2000))
                 .isInstanceOf(IllegalStateException.class);
 
-        //log.info("\n##### 이체 중 예외 발생 STOP #####\n");
+        log.info("\n##### 이체 중 예외 발생 STOP #####\n");
 
         Account findAccount1 = accountProgrammingRepository.findByName(fromAccount.getName());
         Account findAccount2 = accountProgrammingRepository.findByName(toAccount.getName());

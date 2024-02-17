@@ -11,7 +11,7 @@ import org.springframework.util.StopWatch;
 @Aspect
 public class ExampleAspect {
 
-    //@Around("execution(* edu.storeservice.core.ch2..*(..))")
+    @Around("execution(* edu.storeservice.core.ch2..*(..))")
     public Object AopTimer(ProceedingJoinPoint joinPoint) throws Throwable {
 
         StopWatch stopWatch = new StopWatch();
